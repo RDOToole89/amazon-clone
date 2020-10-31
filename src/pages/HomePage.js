@@ -1,31 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import ProductCard from "../components/ProductCard/ProductCard";
-import axios from "axios";
+// import axios from "axios";
 import MessageBox from "../components/MessageBox/MessageBox";
 import LoadingBox from "../components/LoadingBox/LoadingBox";
+import { useDispatch, useSelector } from "react-redux";
+import { listProducts } from "../actions/productActions";
 
 function HomePage() {
-  const [productData, setProductData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  // REDUX MANAGED STATES
+  // const [products, setProducts] = useState([]);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(false);
+  const dispatch = useDispatch();
+  const productList = useSelector((state) => state.productList);
+  const { loading, error, products } = productList;
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get("http://localhost:4000/api/products");
-        setLoading(false);
-        setProductData(response);
-      } catch (e) {
-        console.log(e);
-        setError(e.message);
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+    dispatch(listProducts());
 
-  console.log("what is productData?", productData);
+    // const fetchData = async () => {
+    //   try {
+    //     setLoading(true);
+    //     const { data } = await axios.get("http://localhost:4000/api/products");
+    //     setLoading(false);
+    //     setProducts(data);
+    //   } catch (e) {
+    //     console.log(e);
+    //     setError(e.message);
+    //     setLoading(false);
+    //   }
+    // };
+    // fetchData();
+  }, [dispatch]);
 
   return (
     <div>
@@ -35,7 +41,7 @@ function HomePage() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <div className="row center">
-          {productData.data?.map((product) => {
+          {products?.map((product) => {
             return (
               <ProductCard
                 id={product._id}
