@@ -5,6 +5,7 @@ import data from "../data";
 
 function ProductPage(props) {
   const product = data.products.find((product) => product._id === props.match.params.id);
+
   if (!product) {
     return <div>Product Not Found</div>;
   }
@@ -45,7 +46,7 @@ function ProductPage(props) {
                     {product.countInStock > 0 ? (
                       <span className="success">In Stock </span>
                     ) : (
-                      <span className="error">Unavailable</span>
+                      <span className="danger">Unavailable</span>
                     )}
                   </div>
                 </div>
