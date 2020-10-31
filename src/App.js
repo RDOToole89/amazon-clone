@@ -1,35 +1,25 @@
+import { Route } from "react-router-dom";
 import "./App.css";
-import ProductCard from "./components/ProductCard/ProductCard";
-import data from "./data";
+import HomePage from "./pages/HomePage";
+import ProductPage from "./pages/ProductPage";
 
 function App() {
   return (
     <div className="grid-container">
       <header className="row">
         <div>
-          <a className="brand" href="index.html">
-            amazona
+          <a className="brand" href="/">
+            amazon
           </a>
         </div>
         <div>
-          <a href="cart.html">Cart</a>
-          <a href="signin.html">Sign In</a>
+          <a href="/cart">Cart</a>
+          <a href="/signin">Sign In</a>
         </div>
       </header>
       <main>
-        <div className="row center">
-          {data.products.map((product) => {
-            return (
-              <ProductCard
-                key={product._id}
-                rating={product.rating}
-                name={product.name}
-                image={product.image}
-                price={product.price}
-              />
-            );
-          })}
-        </div>
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/product/:id" component={ProductPage} />
       </main>
       <footer className="row center">All right reserved.</footer>
     </div>

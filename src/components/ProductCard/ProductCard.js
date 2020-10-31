@@ -1,33 +1,19 @@
 import React from "react";
+import Rating from "../Rating/Rating";
+import { Link } from "react-router-dom";
 
 function ProductCard(props) {
-  const { name, image, price } = props;
+  const { id, name, image, price, rating, numReviews } = props;
   return (
     <div className="card">
       <a href="product.html">
         <img className="medium" src={image} alt="product" />
       </a>
       <div className="card-body">
-        <a href="product.html">
+        <Link to={`/product/${id}`}>
           <h2>{name}</h2>
-        </a>
-        <div className="rating">
-          <span>
-            <i className="fa fa-star"></i>
-          </span>
-          <span>
-            <i className="fa fa-star"></i>
-          </span>
-          <span>
-            <i className="fa fa-star"></i>
-          </span>
-          <span>
-            <i className="fa fa-star"></i>
-          </span>
-          <span>
-            <i className="fa fa-star-o"></i>
-          </span>
-        </div>
+        </Link>
+        <Rating rating={rating} numReviews={numReviews} />
         <div className="price">${price}</div>
       </div>
     </div>
